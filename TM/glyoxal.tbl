@@ -1,0 +1,5 @@
+Input "BCtr.tbl";
+Input "TMbase.tbl";
+
+{ HBox { [BCtr]; |; [TMbaseB] } }
+
