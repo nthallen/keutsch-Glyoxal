@@ -2,9 +2,9 @@ BCtr {
   HBox { +-; Title: BCtr; -+ };
   BCtr_0: (BCtr_0_a,6);
   BCtr_1: (BCtr_1_a,6);
-  Status: (BCtr_LVstat,8);
-  LaserV: (BCtr_LaserV,7) mV;
-  LasIn:  >HBox{(BCtr_Pfresh,1); (BCtr_LasIn_mW,7)} mW;
+@LV@ Status: (BCtr_LVstat,8);
+@LV@ LaserV: (BCtr_LaserV,7) mV;
+@LV@ LasIn:  >HBox{(BCtr_Pfresh,1); (BCtr_LasIn_mW,7)} mW;
   Ready:  (BCtr_Ready,3);
   Enable: (BCtr_Enable,3);
   DRdy:   (BCtr_DRdy,3);

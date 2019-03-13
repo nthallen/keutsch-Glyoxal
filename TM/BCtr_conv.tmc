@@ -3,7 +3,7 @@
   #include "nl_assert.h"
   #include "TM_delay.h"
   #include "TM_average.h"
-  #include "HCHO_CAL.h"
+  // #include "HCHO_CAL.h"
 
   BCtr_Trigger_t BCtr_sum(BCtr_Cts_t *Cts, int chan, int from, int to) {
     BCtr_Trigger_t sum = 0;
@@ -21,6 +21,7 @@
 
   #define short2long(x,y) (x + (((unsigned long)y)<<16))
 
+  #ifdef LASER_POWER_FUNCS
   double BCtr_power(unsigned short lsw, unsigned short msw) {
     signed long pwr32 = (signed long)(
             (((unsigned long)msw) << 16) |
@@ -70,6 +71,7 @@
     stat_chg_z1 = stat_chg;
     return LasIn_mW_z3;
   }
+  #endif
 
 %}
 
@@ -78,6 +80,7 @@ TM typedef double mean_cts_t { text "%8.1lf"; }
 TM typedef double ppb_t { text "%9.2lf"; }
 
 %{
+  /*
   PwrDelay Las_mW_delay;
   TM_delay<double,4> t_delay4;
   TM_delay<BCtr_Trigger_t,4> BCtr_0_delay4;
@@ -86,6 +89,7 @@ TM typedef double ppb_t { text "%9.2lf"; }
   TM_delay<HtrDAC_mV_t,4> LaserV_delay4;
   TM_average<mean_cts_t> mnrcts;
   TM_average<mean_cts_t> mnscts;
+  */
   /* HCHO_CAL_CONSTANT units are something like:
       counts/sec/mW/ppb of HCHO
      This should be defined in HCHO_CAL.h
@@ -109,11 +113,11 @@ BCtr_Cts_t BCtr_Status; Invalidate BCtr_Status;
 BCtr_Cts_t BCtr_NWords; Invalidate BCtr_NWords;
 BCtr_NAB_t BCtr_IPnum; Invalidate BCtr_IPnum;
 BCtr_Pfresh_t BCtr_Pfresh; Invalidate BCtr_Pfresh;
-LVstat_t BCtr_LVstat; Invalidate BCtr_LVstat;
+/* LVstat_t BCtr_LVstat; Invalidate BCtr_LVstat; */
 BCtr_Trigger_t BCtr_NTrigger; Invalidate BCtr_NTrigger;
-HtrDAC_mV_t BCtr_LaserV; Invalidate BCtr_LaserV;
+/* HtrDAC_mV_t BCtr_LaserV; Invalidate BCtr_LaserV; */
 /* LaserPwr_t (double) is defined in TS.tmc */
-LaserPwr_t BCtr_LasIn_mW; Invalidate BCtr_LasIn_mW;
+/* LaserPwr_t BCtr_LasIn_mW; Invalidate BCtr_LasIn_mW; */
 BCtr_Yes_No BCtr_Enable; Invalidate BCtr_Enable;
 BCtr_Yes_No BCtr_DRdy; Invalidate BCtr_DRdy;
 BCtr_Yes_No BCtr_TxActive; Invalidate BCtr_TxActive;
@@ -125,25 +129,25 @@ BCtr_OK_FAIL BCtr_Expired; Invalidate BCtr_Expired;
 BCtr_NAB_t BCtr_NAB; Invalidate BCtr_NAB;
 BCtr_Trigger_t BCtr_0_a; Invalidate BCtr_0_a;
 BCtr_Trigger_t BCtr_1_a; Invalidate BCtr_1_a;
-LaserPwr_t LasIn_mW_z3; Invalidate LasIn_mW_z3;
-dtime_t t_z4; Invalidate t_z4;
-BCtr_Trigger_t BCtr_0_z4;
-BCtr_Trigger_t BCtr_1_z4;
-LVstat_t LVstat_z4;
-HtrDAC_mV_t LaserV_z4;
-mean_cts_t norm_ref_cts_z4;
-mean_cts_t norm_sample_cts_z4;
-ppb_t hcho_mr; Invalidate hcho_mr;
+/* LaserPwr_t LasIn_mW_z3; Invalidate LasIn_mW_z3; */
+/* dtime_t t_z4; Invalidate t_z4; */
+/* BCtr_Trigger_t BCtr_0_z4; */
+/* BCtr_Trigger_t BCtr_1_z4; */
+/* LVstat_t LVstat_z4; */
+/* HtrDAC_mV_t LaserV_z4; */
+/* mean_cts_t norm_ref_cts_z4; */
+/* mean_cts_t norm_sample_cts_z4; */
+/* ppb_t hcho_mr; Invalidate hcho_mr; */
 
 {
   BCtr_Status = BCtr_Bins[1];
   BCtr_NWords = BCtr_Bins[2];
   BCtr_IPnum = BCtr_Bins[3]&0x3F;
   BCtr_Pfresh = (BCtr_Bins[3]>>9) & 0x1;
-  BCtr_LVstat = (BCtr_Bins[3] >> 10) & 0x1F;
+/*   BCtr_LVstat = (BCtr_Bins[3] >> 10) & 0x1F; */
   BCtr_NTrigger = short2long(BCtr_Bins[4], BCtr_Bins[5]);
-  BCtr_LaserV = BCtr_Bins[6];
-  BCtr_LasIn_mW = BCtr_power(BCtr_Bins[7],BCtr_Bins[8]);
+/*   BCtr_LaserV = BCtr_Bins[6]; */
+/*   BCtr_LasIn_mW = BCtr_power(BCtr_Bins[7],BCtr_Bins[8]); */
   BCtr_Enable = (BCtr_Bins[1]>>0)&1;
   BCtr_DRdy = (BCtr_Bins[1]>>1)&1;
   BCtr_TxActive = (BCtr_Bins[1]>>2)&1;
@@ -155,7 +159,8 @@ ppb_t hcho_mr; Invalidate hcho_mr;
   BCtr_NAB = (BCtr_Bins[1]>>6)&7;
   BCtr_0_a = BCtr_sum(BCtr_Bins, 0, 15, 99);
   BCtr_1_a = BCtr_sum(BCtr_Bins, 1, 15, 99);
-  LasIn_mW_z3 = Las_mW_delay(BCtr_LasIn_mW, BCtr_LVstat, BCtr_Pfresh);
+/*   LasIn_mW_z3 = Las_mW_delay(BCtr_LasIn_mW, BCtr_LVstat, BCtr_Pfresh); */
+  /*
   t_z4 = t_delay4(dtime());
   BCtr_0_z4 = BCtr_0_delay4(BCtr_0_a);
   BCtr_1_z4 = BCtr_1_delay4(BCtr_1_a);
@@ -165,15 +170,16 @@ ppb_t hcho_mr; Invalidate hcho_mr;
     : (BCtr_0_z4/convert(LasIn_mW_z3));
   norm_sample_cts_z4 = (LasIn_mW_z3 == 0.) ? 0.
     : (BCtr_1_z4/convert(LasIn_mW_z3));
+  */
 
   Validate BCtr_Status;
   Validate BCtr_NWords;
   Validate BCtr_IPnum;
   Validate BCtr_Pfresh;
-  Validate BCtr_LVstat;
+  /* Validate BCtr_LVstat; */
   Validate BCtr_NTrigger;
-  Validate BCtr_LaserV;
-  Validate BCtr_LasIn_mW;
+  /* Validate BCtr_LaserV; */
+  /* Validate BCtr_LasIn_mW; */
   Validate BCtr_Enable;
   Validate BCtr_DRdy;
   Validate BCtr_TxActive;
@@ -185,9 +191,9 @@ ppb_t hcho_mr; Invalidate hcho_mr;
   Validate BCtr_NAB;
   Validate BCtr_0_a;
   Validate BCtr_1_a;
+  /*
   Validate LasIn_mW_z3;
   Validate t_z4;
-  /*
   Validate BCtr_0_z4;
   Validate BCtr_1_z4;
   Validate LVstat_z4;
@@ -197,14 +203,17 @@ ppb_t hcho_mr; Invalidate hcho_mr;
   */
 }
 
+/*
 mean_cts_t mean_online_norm_ref_cts_z4; Invalidate mean_online_norm_ref_cts_z4;
 mean_cts_t mean_online_norm_sample_cts_z4; Invalidate mean_online_norm_sample_cts_z4;
 mean_cts_t mean_offline_norm_sample_cts_z4; Invalidate mean_offline_norm_sample_cts_z4;
 
 LVstat_t LVstat_z5;
 double mnnsctsz4;
+*/
 
 /* Could move this inside the block above */
+/*
 depending on (t_z4)
 { if (LVstat_z4 != LVstat_z5) {
     if (LVstat_z5 & 2) {
@@ -236,3 +245,5 @@ depending on (t_z4)
   mnscts(norm_sample_cts_z4);
   LVstat_z5 = LVstat_z4;
 }
+*/
+

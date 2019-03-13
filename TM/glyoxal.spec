@@ -5,7 +5,7 @@ swsbase = glyoxal.sws
 colbase = SB.cc SB.oui
 
 Module TMbase
-Module BCtr rate=1
+Module BCtr rate=1 LV=#
 cmdbase = pps.cmd
 tmcbase = pps.tmc
 tmcbase = pps_time.tmc

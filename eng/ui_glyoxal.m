@@ -1,0 +1,25 @@
+function ui_glyoxal
+f = ne_dialg('Glyoxal Instrument',1);
+f = ne_dialg(f, 'add', 0, 1, 'gglyoxalpps', 'PPS' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalppsd', 'Drift' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalppsr', 'Raw' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalppsf', 'Fine' );
+f = ne_dialg(f, 'add', 0, 1, 'gglyoxalips', 'IPS' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalipsf', 'Fine' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalipse', 'Error' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalipss', 'Status' );
+f = ne_dialg(f, 'add', 0, 1, 'gglyoxaltm', 'T Mbase' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxaltmtd', 'T Drift' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxaltmcpu', 'CPU' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxaltmram', 'RAM' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxaltmd', 'Disk' );
+f = ne_dialg(f, 'add', 0, 1, 'gglyoxalbc', 'B Ctr' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcc', 'Cts' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcnw', 'N Words' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcip', 'I Pnum' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcnt', 'N Trigger' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcnab', 'NAB' );
+f = ne_dialg(f, 'add', 1, 0, 'pglyoxalbcs', 'Status' );
+f = ne_listdirs(f, 'GLYOXAL_DATA_DIR', 15);
+f = ne_dialg(f, 'newcol');
+ne_dialg(f, 'resize');
