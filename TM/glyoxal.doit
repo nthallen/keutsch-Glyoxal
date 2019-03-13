@@ -1,0 +1,10 @@
+display glyoxaldisp
+client glyoxalclt
+
+# PhRTG configuration: only run when not in text mode
+server [!screen] cmd/server playbacksrvr
+server [!screen] - phrtg
+extraction [!screen] glyoxalrtgext
+
+memo
+batchfile interact

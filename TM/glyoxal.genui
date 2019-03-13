@@ -1,0 +1,13 @@
+HEADER Glyoxal Instrument
+MNEMONIC glyoxal
+HOMEDIR GLYOXAL_DATA_DIR
+
+ 10 PPS_drift PPS Drift
+ 10 PPS_min_drift PPS Drift
+ 10 PPS_time  PPS Raw  %.0lf
+  1 PPS_fine  PPS Fine
+  1 IPS_fine  IPS Fine
+  1 IPS_err   IPS Error
+  1 IPS_status IPS Status
+# 1 CellT     Cell T
+# 1 OmegaP    Cell P
